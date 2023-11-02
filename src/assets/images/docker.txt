@@ -1,0 +1,35 @@
+docker run -d -p 80:80 docker/getting-started
+
+https://hub.docker.com/search?q=             //docker hub repositories
+
+To pull an image   from
+
+1. docker pull ubuntu
+
+To list the images
+
+2. docker images
+
+To delete an image
+
+3. docker rmi imageid
+
+To display all container
+
+4. docker ps   ///display all the running containers
+5. docker ps -a  ///display all containers
+
+To delete a container
+
+6. docker rm containerid
+
+To rename an image
+
+7. docker tag OldName:tag NewName:tag     
+
+To run an image in a container
+
+8. docker run imagename      //docker run -dit ubuntu
+
+=======================================================================
+

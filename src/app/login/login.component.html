@@ -1,0 +1,55 @@
+<h1 style="font-weight: bolder;">Login</h1>
+
+<h2>{{responseMsg}}</h2>
+
+<mat-grid-list cols="2" rowHeight="100px" gutterSize="10px" [formGroup]="loginForm">
+
+    <mat-grid-tile colspan="2">
+        <mat-form-field appearance="fill" style="color: blue;">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email">
+            <mat-error *ngIf="this.Email.invalid">{{getEmailErrors()}}</mat-error>
+        </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile colspan="2">
+        <mat-form-field appearance="fill" style="color:red;">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <button mat-icon-button matSuffix (click)="hide = !hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="this.Password.invalid">{{getPasswordErrors()}}</mat-error>
+        </mat-form-field>
+        
+    </mat-grid-tile>
+   
+
+    <mat-grid-tile colspan="2" class="login">
+        
+        <button mat-flat-button style="background-color: red; color: white;" class="login-btn" [disabled]="loginForm.invalid"
+                (click)="login()">Login</button>
+    </mat-grid-tile>
+
+</mat-grid-list>
+
+<div class="login-link">
+    <span style="color: red; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;font-weight: bolder;">Don't have an account?</span>
+    <button mat-stroked-button style="color: gold; background-color: black;" routerLink="/register">Create Account</button>
+    
+</div>
+
+<div class="mx-5 mt-5 my-2 py bordert">
+    <div class="text-center py-3">
+      <a href="https://www.facebook.com/" class="px-2">
+        <img
+          src="https://1000logos.net/wp-content/uploads/2016/11/Facebook-logo.png"
+      /></a>
+      <a href="https://www.google.com/" class="px-2">
+        <img src="http://pngimg.com/uploads/google/google_PNG19635.png"
+      /></a>
+      <a href="https://github.com/" class="px-2">
+        <img
+          src="https://logos-world.net/wp-content/uploads/2020/11/GitHub-Symbol.png"
+      /></a>
+    </div>

@@ -1,0 +1,15 @@
+<page-header (menuClicked)="sideNav.toggle()"></page-header>
+
+<mat-sidenav-container>
+  <mat-sidenav mode="side" #sideNav closed class="mat-elevation-z6" style="background: #c31432;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #240b36, #c31432);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #240b36, #c31432);" >
+    <div *ngIf="loggedIn()"><side-nav></side-nav></div>
+    <div *ngIf="!loggedIn()"><app-side-nav1></app-side-nav1></div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+   
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
