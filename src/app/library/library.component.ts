@@ -26,8 +26,9 @@ export class LibraryComponent implements OnInit {
 
   additionalBookDetails!: { Bookid: number[]; Quantity: number; }[];
 
-
-  constructor(private api: ApiService, private helper: HelperService) {}
+  constructor(private api: ApiService, private helper: HelperService ) {}
+ 
+ 
   checkAvailability(id: number) {
     for (let i = 0; i < this.additionalBookDetails.length; i++) {
         if (this.additionalBookDetails[i].Bookid.includes(id)) {
@@ -36,6 +37,7 @@ export class LibraryComponent implements OnInit {
     }
     return "Not Available";
 }
+
 
 getQuantity(id: number) {
   for (let i = 0; i < this.additionalBookDetails.length; i++) {
@@ -49,20 +51,23 @@ getQuantity(id: number) {
   ngOnInit(): void {
    this.getData();
   }
-  getData(){this.api.getAllBooks().subscribe({
-    next: (res: Book[]) => {
-      this.availableBooks = [];
-      console.log(res);
-      this.totalData = this.helper.consolidateBooks(res);
-      this.availableBooks = this.helper.removeDuplicates(this.totalData['books']);
-      this.additionalBookDetails = this.totalData['filteredData'];
-      console.log(this.availableBooks);
-     
-      this.updateList();
-    },
-    error: (err: any) => console.log(err),
-  });}
-  
+
+
+  getData(){
+    this.api.getAllBooks().subscribe({
+      next: (res: Book[]) => {
+        this.availableBooks = [];
+        console.log(res);
+        this.totalData = this.helper.consolidateBooks(res);
+        this.availableBooks = this.helper.removeDuplicates(this.totalData['books']);
+        this.additionalBookDetails = this.totalData['filteredData'];
+        console.log(this.availableBooks);
+       
+        this.updateList();
+      },
+      error: (err: any) => console.log(err),
+    });
+  }
 
   updateList() {
     this.booksToDisplay = [];
@@ -119,6 +124,7 @@ getQuantity(id: number) {
       next: (res: any) => {
         if (res === 'success') {
           book.available = false;
+          this.getData();
         }
       },
       error: (err: any) => console.log(err),
