@@ -38,6 +38,9 @@ export class ReturnBookComponent  implements OnInit {
       next: (res: any) => {
         console.log(res);
         this.status = 'Book Returned!';
+        this.bookForm.get('bookId')?.reset();
+      
+        
         
       },
       error: (err: any) => console.log(err),
