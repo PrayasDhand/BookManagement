@@ -13,13 +13,25 @@
 
             <mat-form-field appearance="fill" color="accent">
                 <mat-label>Book Category</mat-label>
-                <input matInput formControlName="category">
+                <mat-select formControlName="category">
+                    <mat-option *ngFor="let list of categories" (click)="assignSubcategory(list)" [value]="list.name">
+                        {{list.name}}
+                    </mat-option>
+                </mat-select>
+                <!-- <input matInput formControlName="category"> -->
                 <mat-error *ngIf="this.Category.invalid">Required</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill" color="accent">
                 <mat-label>Book Sub-Category</mat-label>
-                <input matInput formControlName="subcategory">
+              
+                <mat-select formControlName="subcategory" [disable]="subCategory">
+                    <mat-option *ngFor="let list of subCategory" [value]="list.name">
+                        {{list.name}}
+                    </mat-option>
+                </mat-select>
+              
+                <!-- <input matInput formControlName="subcategory"> -->
                 <mat-error *ngIf="this.Subcategory.invalid">Required</mat-error>
             </mat-form-field>
 

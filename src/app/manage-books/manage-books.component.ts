@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -12,10 +12,11 @@ import { ApiService } from '../services/api.service';
   templateUrl: './manage-books.component.html',
   styleUrls: ['./manage-books.component.scss'],
 })
-export class ManageBooksComponent {
+export class ManageBooksComponent implements OnInit {
   addBookForm: FormGroup;
   deleteBookForm: FormControl;
-
+  categories!: any[];
+  subCategory!: any[];
   addMsg: string = '';
   delMsg: string = '';
 
@@ -29,6 +30,17 @@ export class ManageBooksComponent {
     });
 
     this.deleteBookForm = fb.control('', [Validators.required]);
+  }
+  assignSubcategory(list: any){
+    this.subCategory = list.children;
+  }
+  ngOnInit(): void {
+    this.api.getCategories().subscribe((res) => {
+      this.categories = res;
+      console.log(this.categories);
+      
+      
+     })
   }
 
   insertBook() {
