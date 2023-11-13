@@ -13,9 +13,9 @@
             </button>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" style="color:red">
-            <mat-label>User Id</mat-label>
-            <input matInput formControlName="userId">
+        <mat-form-field appearance="outline" color="accent" >
+            <mat-label>User Name</mat-label>
+            <input matInput formControlName="userId" readonly [(ngModel)]="username">
             <button mat-icon-button matSuffix>
                 <mat-icon>person</mat-icon>
             </button>

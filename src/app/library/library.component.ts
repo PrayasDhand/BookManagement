@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Book, CategoryBooks } from '../models/models';
 import { ApiService } from '../services/api.service';
+import { HelperService } from '../services/helper.service';
+import { Data } from '@angular/router';
 
 @Component({
   selector: 'library',
@@ -16,22 +18,51 @@ export class LibraryComponent implements OnInit {
     'author',
     'price',
     'available',
+    'quantity',
     'order',
   ];
 
-  constructor(private api: ApiService) {}
+  totalData!: Data; 
+
+  additionalBookDetails!: { Bookid: number[]; Quantity: number; }[];
+
+
+  constructor(private api: ApiService, private helper: HelperService) {}
+  checkAvailability(id: number) {
+    for (let i = 0; i < this.additionalBookDetails.length; i++) {
+        if (this.additionalBookDetails[i].Bookid.includes(id)) {
+            return "Available";
+        }
+    }
+    return "Not Available";
+}
+
+getQuantity(id: number) {
+  for (let i = 0; i < this.additionalBookDetails.length; i++) {
+      if (this.additionalBookDetails[i].Bookid.includes(id)) {
+          return this.additionalBookDetails[i].Quantity;
+      }
+  }
+  return 0;
+}
 
   ngOnInit(): void {
-    this.api.getAllBooks().subscribe({
-      next: (res: Book[]) => {
-        this.availableBooks = [];
-        console.log(res);
-        for (var book of res) this.availableBooks.push(book);
-        this.updateList();
-      },
-      error: (err: any) => console.log(err),
-    });
+   this.getData();
   }
+  getData(){this.api.getAllBooks().subscribe({
+    next: (res: Book[]) => {
+      this.availableBooks = [];
+      console.log(res);
+      this.totalData = this.helper.consolidateBooks(res);
+      this.availableBooks = this.helper.removeDuplicates(this.totalData['books']);
+      this.additionalBookDetails = this.totalData['filteredData'];
+      console.log(this.availableBooks);
+     
+      this.updateList();
+    },
+    error: (err: any) => console.log(err),
+  });}
+  
 
   updateList() {
     this.booksToDisplay = [];

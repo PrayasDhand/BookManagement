@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -12,24 +12,33 @@ import { ApiService } from '../services/api.service';
   templateUrl: './return-book.component.html',
   styleUrls: ['./return-book.component.scss'],
 })
-export class ReturnBookComponent {
+export class ReturnBookComponent  implements OnInit {
   status: string = '';
   bookForm: FormGroup;
+  username?: string;
+  user!: any;
 
-  constructor(private api: ApiService, private fb: FormBuilder) {
+  constructor(public api: ApiService, private fb: FormBuilder) {
     this.bookForm = this.fb.group({
       bookId: fb.control('', [Validators.required]),
       userId: fb.control('', [Validators.required]),
     });
   }
+  ngOnInit(): void {
+    console.log(this.api.getTokenUserInfo());
+    this.user = this.api.getTokenUserInfo()
+    
+   this.username = this.user.firstName;
+  }
 
   returnBook() {
     let book = (this.bookForm.get('bookId') as FormControl).value;
-    let user = (this.bookForm.get('userId') as FormControl).value;
+    let user = this.user.id;
     this.api.returnBook(book, user).subscribe({
       next: (res: any) => {
-        if (res === 'success') this.status = 'Book Returned!';
-        else this.status = res;
+        console.log(res);
+        this.status = 'Book Returned!';
+        
       },
       error: (err: any) => console.log(err),
     });
