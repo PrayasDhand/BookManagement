@@ -57,10 +57,10 @@
         <th mat-header-cell *matHeaderCellDef>Action</th>
         <td mat-cell *matCellDef="let element">
             <div class="action-group">
-                <button mat-flat-button style="color: white; background-color: red;" (click)="blockUser(element)">
+                <button *ngIf="!loggedIn(element)" mat-flat-button style="color: white; background-color: red;" (click)="blockUser(element)">
                     {{element.blocked ? "Unblock" : "Block"}}
                 </button>
-                <button mat-flat-button style="color: white; background-color: red;" (click)="enableUser(element)">
+                <button *ngIf="!loggedIn(element)" mat-flat-button style="color: white; background-color: red;" (click)="enableUser(element)">
                     {{element.active ? "Disable" : "Enable"}}
                 </button>
                 <button  (click) ="showRemind(element)" mat-flat-button style="color: white; background-color: red;">

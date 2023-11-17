@@ -82,4 +82,13 @@ export class UsersListComponent implements OnInit {
   showSuccess(){
     this.toastr.success('Mail Sent Successfully','Success');
   }
+
+  loggedIn(element: any){
+    console.log("here");
+    
+    if (element?.userType === "ADMIN"){
+      return true;
+    }
+    return false;
+  }
 }
